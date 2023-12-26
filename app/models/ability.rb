@@ -23,7 +23,7 @@ class Ability
         can :create, Post, user_id: user.id # Creators can create posts
         # can :update, Post, user_id: user.id # Creators can update their own posts
         can :destroy, Post, user_id: user.id # Creators can delete their own posts
-        can :create, Content, user_id: user.id # Creators can create content
+        # can :create, Content, user_id: user.id # Creators can create content
       end
     end
     #
