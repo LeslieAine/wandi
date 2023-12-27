@@ -17,6 +17,14 @@ Rails.application.routes.draw do
 
       resources :users, only: [:index, :show]
 
+      # Contents controller routes
+      resources :contents, only: [:create, :index, :show, :destroy] do
+        member do
+          post 'create', to: 'purchases#create'
+          get 'purchases_on_content', to: 'purchases#purchases_on_content'
+        end
+      end
+
     end
   end
 
