@@ -60,3 +60,7 @@ gem 'activestorage'
 
 #for ActiveRecord
 gem 'active_model_serializers'
+
+#for following
+gem "socialization"
+

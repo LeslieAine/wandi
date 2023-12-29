@@ -26,14 +26,14 @@ class User < ApplicationRecord
   # has_many :orders, dependent: :destroy
   has_many :purchases, dependent: :destroy
 
-  # acts_as_follower
-  # acts_as_followable
+  acts_as_follower
+  acts_as_followable
 
-  has_many :orders, foreign_key: :ordered_by_id, dependent: :destroy
-  has_many :accepted_orders, class_name: 'Order', foreign_key: :accepted_by_id, dependent: :nullify
-  has_many :rejected_orders, class_name: 'Order', foreign_key: :rejected_by_id, dependent: :nullify
-  has_many :made_orders, class_name: 'Order', foreign_key: 'user_id'
-  has_many :received_orders, class_name: 'Order', foreign_key: 'accepted_by_id'
+  # has_many :orders, foreign_key: :ordered_by_id, dependent: :destroy
+  # has_many :accepted_orders, class_name: 'Order', foreign_key: :accepted_by_id, dependent: :nullify
+  # has_many :rejected_orders, class_name: 'Order', foreign_key: :rejected_by_id, dependent: :nullify
+  # has_many :made_orders, class_name: 'Order', foreign_key: 'user_id'
+  # has_many :received_orders, class_name: 'Order', foreign_key: 'accepted_by_id'
 
 
   def deduct_balance(amount)

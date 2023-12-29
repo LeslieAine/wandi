@@ -88,29 +88,29 @@ class Api::V1::UsersController < ApplicationController
         render json: { error: 'Failed to follow this user.' }, status: :unprocessable_entity
       end
     end
-  
-    # def unfollow
-    #   user_to_unfollow = User.find(params[:user_id])
+
+    def unfollow
+      user_to_unfollow = User.find(params[:user_id])
       
-    #   @unfollowing = current_user
-    #   if @unfollowing.unfollow!(user_to_unfollow)
-    #     render json: { message: 'You have unfollowed this user.', unfollower: @unfollowing }
-    #   else
-    #     render json: { error: 'Failed to unfollow this user.' }, status: :unprocessable_entity
-    #   end
-    # end
+      @unfollowing = current_user
+      if @unfollowing.unfollow!(user_to_unfollow)
+        render json: { message: 'You have unfollowed this user.', unfollower: @unfollowing }
+      else
+        render json: { error: 'Failed to unfollow this user.' }, status: :unprocessable_entity
+      end
+    end
   
-    # def followers
-    #   user = User.find(params[:user_id])  # Assuming you have the user ID in the params
-    #   @followers = user.followers(User)
-    #   render json: @followers, status: :ok
-    # end
+    def followers
+      user = User.find(params[:user_id])  # Assuming you have the user ID in the params
+      @followers = user.followers(User)
+      render json: @followers, status: :ok
+    end
   
-    # def followees
-    #   user = User.find(params[:user_id])  # Assuming you have the user ID in the params
-    #   @followees = user.followers(User)
-    #   render json: @followees, status: :ok
-    # end
+    def followees
+      user = User.find(params[:user_id])  # Assuming you have the user ID in the params
+      @followees = user.followees(User)
+      render json: @followees, status: :ok
+    end
   
     def current_balance
       render json: { balance: current_user.balance }, status: :ok
