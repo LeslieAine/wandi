@@ -101,13 +101,13 @@ class Api::V1::UsersController < ApplicationController
     end
   
     def followers
-      user = User.find(params[:user_id])  # Assuming you have the user ID in the params
+      user = User.find(params[:user_id])
       @followers = user.followers(User)
       render json: @followers, status: :ok
     end
   
     def followees
-      user = User.find(params[:user_id])  # Assuming you have the user ID in the params
+      user = User.find(params[:user_id]) 
       @followees = user.followees(User)
       render json: @followees, status: :ok
     end

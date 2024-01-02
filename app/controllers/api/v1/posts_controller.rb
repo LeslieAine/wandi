@@ -2,7 +2,8 @@
 
     class Api::V1::PostsController < ApplicationController
         # before_action :authenticate_user_from_token!
-        # before_action :authenticate_user, only: [:create]
+        # before_action :authenticate_user!, only: [:create]
+        # before_action :authenticate_user!
         before_action :find_post, only: [:show, :destroy]
         # load_and_authorize_resource
         
@@ -34,6 +35,7 @@
         def create
             
             @user = current_user
+            # @user = User.find(params[:user_id])
 
         if @user.nil?
             render json: { error: 'User not found' }, status: :unprocessable_entity

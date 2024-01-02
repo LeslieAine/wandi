@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
-  include RackSessionsFix
+  # include RackSessionsFix
 
   respond_to :json
 
@@ -18,19 +16,37 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   def respond_with(resource, _options = {})
-    puts "Responding with resource: #{resource.inspect}"
+    if resource.persisted?
+      sign_in(resource)
+      # current_user = User.find(resource.id)
+      token = request.env['warden-jwt_auth.token']
 
-    return unless resource.persisted?
-
-    current_user = User.find(resource.id)
-    token = request.env['warden-jwt_auth.token']
-    # token = request.headers['Authorization'].split(' ').last if request.headers['Authorization'].present?
-    # token = auth_token
-
-    render json: {
-      status: { code: 200, message: 'Signed in successfully!', data: current_user, token: token }
-    }, status: :ok
+      render json: {
+        status: { code: 200, message: 'Signed in successfully!', data: resource, token: token }
+      }, status: :ok
+    else
+      render json: {
+        status: 401,
+        message: 'Invalid credentials. Unable to sign in.'
+      }, status: :unauthorized
+    end
   end
+
+
+  # def respond_with(resource, _options = {})
+  #   puts "Responding with resource: #{resource.inspect}"
+
+  #   return unless resource.persisted?
+
+  #   current_user = User.find(resource.id)
+  #   token = request.env['warden-jwt_auth.token']
+  #   # token = request.headers['Authorization'].split(' ').last if request.headers['Authorization'].present?
+  #   # token = auth_token
+
+  #   render json: {
+  #     status: { code: 200, message: 'Signed in successfully!', data: current_user, token: token }
+  #   }, status: :ok
+  # end
 
   def respond_to_on_destroy
     if request.headers['Authorization'].present?
